@@ -28,12 +28,27 @@ jobs:
       - run:
           name: Test unitaire
           command: npm run test:unit
+  test_linter:
+    docker:
+      - image: circleci/node:12.16.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package-lock.json" }}
+            - dependencies-
+      - run:
+          name: Test linter
+          command: npm run test:lint
 workflows:
   version: 2
   deploy:
     jobs:
       - install_dependencies
       - test_unitaire:
+          requires:
+            - install_dependencies
+      - test_linter:
           requires:
             - install_dependencies
         
