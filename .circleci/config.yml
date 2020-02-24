@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Test linter
           command: npm run test:lint
-    app-deploy:
+  app-deploy:
     docker:
       - image: circleci/node:12.16.0
     steps:
