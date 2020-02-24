@@ -62,7 +62,7 @@ workflows:
       - test_linter:
           requires:
             - install_dependencies
-      - deploy: 
+      - app-deploy:
           requires:
             - test_unitaire
             - test_linter
