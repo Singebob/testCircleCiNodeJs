@@ -40,6 +40,17 @@ jobs:
       - run:
           name: Test linter
           command: npm run test:lint
+    app-deploy:
+    docker:
+      - image: circleci/node:12.16.0
+    steps:
+      - checkout
+      - run:
+          name: Install Captain Rover CLI
+          command: sudo npm install -g caprover
+      - deploy:
+          name: Deploy app to Captain Rover
+          command: caprover deploy -h $DOMAIN -p $PASSWORD -b master -a $APPNAME
 workflows:
   version: 2
   deploy:
@@ -51,4 +62,12 @@ workflows:
       - test_linter:
           requires:
             - install_dependencies
+      - deploy: 
+          requires:
+            - test_unitaire
+            - test_linter
+          context: test-circleci-node
+          filters:
+            branches:
+              only: master
         
