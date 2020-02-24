@@ -16,8 +16,24 @@ jobs:
           paths:
             - ./node_modules
           key: dependencies-{{ checksum "package-lock.json" }}
+  test_unitaire:
+    docker:
+      - image: circleci/node:12.16.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package-lock.json" }}
+            - dependencies-
+      - run:
+          name: Test unitaire
+          command: npm run test:unit
 workflows:
   version: 2
   deploy:
     jobs:
       - install_dependencies
+      - test_unitaire:
+          requires:
+            - install_dependencies
+        
