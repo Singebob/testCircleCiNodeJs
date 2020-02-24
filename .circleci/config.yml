@@ -15,4 +15,4 @@ jobs:
       - save_cache:
           paths:
             - ./node_modules
-            key: dependencies-{{ checksum "package-lock.json" }}
+          key: dependencies-{{ checksum "package-lock.json" }}
