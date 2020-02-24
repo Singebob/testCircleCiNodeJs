@@ -16,3 +16,8 @@ jobs:
           paths:
             - ./node_modules
           key: dependencies-{{ checksum "package-lock.json" }}
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      install_dependencies
