@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:unit": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,8 @@
   "homepage": "https://github.com/Singebob/testCircleCiNodeJs#readme",
   "dependencies": {
     "@hapi/hapi": "^19.1.0"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
   }
 }
