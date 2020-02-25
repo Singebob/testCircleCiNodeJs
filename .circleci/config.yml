@@ -54,7 +54,7 @@ jobs:
           name: Deploy app to Captain Rover
           command: caprover deploy -h $DOMAIN -p $PASSWORD -b master -a $APPNAME
 workflows:
-  version: 2
+  version: 2.1
   deploy:
     jobs:
       - install_dependencies
