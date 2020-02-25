@@ -65,9 +65,9 @@ workflows:
           requires:
             - install_dependencies
       - app-deploy:
+          <<: *filter_branch_master
           requires:
             - test_unitaire
             - test_linter
           context: test-circleci-node
-          *filter_branch_master
         
