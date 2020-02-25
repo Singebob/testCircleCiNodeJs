@@ -1,14 +1,18 @@
-version: 2
+version: 2.1
+
+node_modules_cache: &node_modules_cache
+  restore_cache:
+    keys:
+      - dependencies-{{ checksum "package-lock.json" }}
+      - dependencies-
+
 jobs:
   install_dependencies:
     docker:
       - image: circleci/node:12.16.0
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package-lock.json" }}
-            - dependencies-
+      - *node_modules_cache
       - run:
           name: Download dependencies
           command: npm install
@@ -21,10 +25,7 @@ jobs:
       - image: circleci/node:12.16.0
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package-lock.json" }}
-            - dependencies-
+      - *node_modules_cache
       - run:
           name: Test unitaire
           command: npm run test:unit
@@ -33,10 +34,7 @@ jobs:
       - image: circleci/node:12.16.0
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package-lock.json" }}
-            - dependencies-
+      - *node_modules_cache
       - run:
           name: Test linter
           command: npm run test:lint
@@ -51,18 +49,6 @@ jobs:
       - deploy:
           name: Deploy app to Captain Rover
           command: caprover deploy -h $DOMAIN -p $PASSWORD -b master -a $APPNAME
-  release:
-    docker:
-      - image: circleci/node:12.16.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package-lock.json" }}
-            - dependencies-
-      - run: 
-          name: Create release
-          command: npx semantic-release
 workflows:
   version: 2
   deploy:
@@ -79,12 +65,6 @@ workflows:
             - test_unitaire
             - test_linter
           context: test-circleci-node
-          filters:
-            branches:
-              only: master
-      - release:
-          requires:
-            - app-deploy
           filters:
             branches:
               only: master
