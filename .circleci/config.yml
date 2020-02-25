@@ -85,7 +85,7 @@ workflows:
       - release:
           requires:
             - app-deploy
-            filters:
-              branches:
-                only: master
+          filters:
+            branches:
+              only: master
         
