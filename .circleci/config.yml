@@ -5,6 +5,10 @@ node_modules_cache: &node_modules_cache
     keys:
       - dependencies-{{ checksum "package-lock.json" }}
       - dependencies-
+filter_branch_master: &filter_branch_master
+  filters:
+    branches:
+      only: master
 
 jobs:
   install_dependencies:
@@ -65,7 +69,5 @@ workflows:
             - test_unitaire
             - test_linter
           context: test-circleci-node
-          filters:
-            branches:
-              only: master
+          *filter_branch_master
         
