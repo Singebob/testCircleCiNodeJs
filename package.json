@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/Singebob/testCircleCiNodeJs#readme",
   "dependencies": {
-    "@hapi/hapi": "^19.1.0"
+    "@hapi/hapi": "^19.1.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
